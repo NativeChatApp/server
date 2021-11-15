@@ -7,8 +7,8 @@ import { verifyToken } from "../services/utils.js";
 
 const router = express.Router();
 
-router.post("/getChatHistory", verifyToken, getChatHistory);
+router.get("/getChatHistory/:peerId", verifyToken, getChatHistory);
 
-router.post("/getRecentChatUsers", verifyToken, getRecentChatUsers);
+router.get("/getRecentChatUsers", verifyToken, getRecentChatUsers);
 
 export default router;

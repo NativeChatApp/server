@@ -3,14 +3,15 @@ import chatModel from "../models/chatModel.js";
 export const getChatHistory = async (req, res) => {
   try {
     const { peerId } = req.params;
-    const { userId } = req.token;
-
-    const chats = await chatModel.findOne({
+    const { userId } = req;
+    console.log("Chatsss =>", userId, peerId);
+    const chats = await chatModel.find({
       $or: [
         { sender: { $in: [userId, peerId] } },
         { receiver: { $in: [userId, peerId] } },
       ],
     });
+    console.log("chats =>", chats);
     res.send({ code: 200, chats });
   } catch (error) {
     console.log("Error in getChatHistory =>", error);
@@ -20,12 +21,13 @@ export const getChatHistory = async (req, res) => {
 
 export const getRecentChatUsers = async (req, res) => {
   try {
-    const { userId } = req.token;
+    const { userId } = req;
     let users = [];
     const chats = await chatModel
       .find({ $or: [{ sender: userId }, { receiver: userId }] })
       .populate("sender")
       .populate("receiver");
+    console.log("Chars =>", users);
     for await (let chat of chats) {
       if (
         chat.sender._id !== userId &&

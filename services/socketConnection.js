@@ -1,4 +1,5 @@
-import userModel from "../models/userModel";
+import chatModel from "../models/chatModel.js";
+import userModel from "../models/userModel.js";
 
 const socketConnection = (io) => {
   io.users = [];
@@ -19,9 +20,16 @@ const socketConnection = (io) => {
         console.log("Error in join Socket =>", error);
       }
     });
-    socket.on("sendNewMessage", (data) => {
+    socket.on("sendNewMessage", async (data) => {
       const { sender, receiver, content } = data;
+      const chat = await chatModel.create({
+        sender,
+        receiver,
+        content,
+      });
+      io.in(receiver).emit("NewMessage", data);
     });
+
     socket.on("disconnect", () => {
       console.log("One User disconected");
     });

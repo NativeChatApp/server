@@ -26,5 +26,5 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 
 server.listen(process.env.PORT, () => {
-  console.log("Server is Running...");
+  console.log("Server is Running...", process.env.PORT);
 });
