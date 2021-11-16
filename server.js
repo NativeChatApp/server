@@ -14,12 +14,20 @@ dotenv.config();
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-mongoConnect();
+const isConnected = mongoConnect();
 
 const server = createServer(app);
 const io = new Server(server, {});
 
 socketConnection(io);
+
+app.get("/", (req, res) => {
+  res.send(
+    `<h1>Server is runnning and dn is${
+      isConnected ? "Connected" : "Not connected"
+    }</h1>`
+  );
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);

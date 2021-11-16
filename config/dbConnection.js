@@ -9,9 +9,12 @@ const mongoConnect = async () => {
         useUnifiedTopology: true,
       }
     );
+
     console.log("Connected to mongo DB");
+    return true;
   } catch (error) {
     console.log("Error in db Connect", error);
+    return false;
   }
 };
 export default mongoConnect;
