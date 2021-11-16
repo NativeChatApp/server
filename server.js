@@ -33,6 +33,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-server.listen(3001, () => {
-  console.log("Server is Running...", 3001);
+server.listen(process.env.PORT, () => {
+  console.log("Server is Running...", process.env.PORT);
 });
